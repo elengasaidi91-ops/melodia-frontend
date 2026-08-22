@@ -1,0 +1,86 @@
+<div class="screen" id="screen-artist">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Mon espace artiste</div><div style="width:40px;"></div></div>
+<div class="bal-card">
+<div style="font-size:12.5px;font-weight:700;">Solde</div>
+<div class="bal-amt" id="art-balance">0 FCFA</div>
+<div style="font-size:11.5px;">Revenus cumules de tes fans</div>
+</div>
+<div class="grid2">
+<div class="tile"><div class="ic">Chansons</div><div id="art-songcount">0</div><div style="font-size:10.5px;color:var(--mut);font-weight:600;">Chansons</div></div>
+<div class="tile"><div class="ic">Abonnes</div><div id="art-followers">0</div><div style="font-size:10.5px;color:var(--mut);font-weight:600;">Abonnes</div></div>
+</div>
+<button class="btn" style="margin-bottom:10px;" onclick="nav('artist-upload')">Ajouter une chanson</button>
+<div class="sec-hdr"><div class="sec-title">Mes chansons</div></div>
+<div id="art-songs"></div>
+</div>
+<div class="screen" id="screen-artist-upload">
+<div class="topbar"><button class="icon-btn" onclick="nav('artist')">Retour</button><div style="font-size:18px;font-weight:800;">Ajouter une chanson</div><div style="width:40px;"></div></div>
+<label class="lbl">Titre</label>
+<input class="inp" id="up-title" placeholder="Titre de la chanson">
+<label class="lbl">Genre</label>
+<input class="inp" id="up-genre" placeholder="Ex: Afrobeat, Rap...">
+<label class="lbl">Lien audio (URL)</label>
+<input class="inp" id="up-audio" placeholder="https://...">
+<label class="lbl">Lien pochette (URL, optionnel)</label>
+<input class="inp" id="up-cover" placeholder="https://...">
+<p class="desc" style="margin-bottom:14px;">Ta chanson sera envoyee a l'administrateur pour validation avant d'apparaitre publiquement.</p>
+<button class="btn" id="up-btn" onclick="uploadSong()">Envoyer pour validation</button>
+</div>
+<div class="screen" id="screen-chatlist">
+<div class="topbar"><div style="font-size:22px;font-weight:800;">Messages</div></div>
+<div id="chat-list"></div>
+</div>
+<div class="screen" id="screen-chatthread">
+<div class="topbar"><button class="icon-btn" onclick="nav('chatlist')">Retour</button><div style="font-size:15px;font-weight:800;" id="ct-name">-</div><div style="width:40px;"></div></div>
+<div class="thread" id="ct-msgs"></div>
+<div class="chat-input-row"><input id="ct-input" placeholder="Ecrire un message..."><button class="send-btn" onclick="sendChat()">Envoyer</button></div>
+</div>
+<div class="screen" id="screen-payment">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Pass Premium</div><div style="width:40px;"></div></div>
+<div class="plan-row">
+<div class="plan-opt on" data-plan="mensuel" onclick="selPlan('mensuel')">Mensuel</div>
+<div class="plan-opt" data-plan="trimestriel" onclick="selPlan('trimestriel')" style="position:relative;">Trimestriel</div>
+<div class="plan-opt" data-plan="annuel" onclick="selPlan('annuel')" style="position:relative;">Annuel<span class="discount">-20%</span></div>
+</div>
+<div class="price-card">
+<div style="font-size:12.5px;color:var(--mut);font-weight:700;">Acces complet</div>
+<div class="price-amt" id="pay-amount">1 000 FCFA</div>
+<div style="font-size:12px;color:var(--mut);" id="pay-desc">Acces complet pendant 1 mois</div>
+</div>
+<label class="lbl">Paiement Mobile Money</label>
+<div class="pay-opt sel" data-op="airtel" onclick="selOp('airtel')"><div>Airtel Money</div><div class="radio on"></div></div>
+<div class="pay-opt" data-op="mtn" onclick="selOp('mtn')"><div>MTN Mobile Money</div><div class="radio"></div></div>
+<p class="desc" style="margin:14px 0;">Apres avoir envoye le paiement sur notre numero, confirme ici. Un administrateur validera ta transaction sous peu et ton Premium sera active.</p>
+<button class="btn" id="pay-btn" onclick="submitPayment()">Confirmer le paiement</button>
+</div>
+<div class="screen" id="screen-diamonds">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Soutenir l'artiste</div><div style="width:40px;"></div></div>
+<div style="text-align:center;margin-bottom:10px;">
+<div style="font-size:13px;color:var(--mut);">Ton solde</div>
+<div style="font-size:22px;font-weight:900;color:var(--grn);" id="my-diamonds">0</div>
+</div>
+<div class="sec-hdr"><div class="sec-title">Envoyer des diamants a <span id="dia-artist-name">l'artiste</span></div></div>
+<div class="dgrid" id="gift-amounts"></div>
+<button class="btn" style="margin-bottom:14px;" id="gift-btn" onclick="sendGift()">Envoyer les diamants</button>
+<div class="sec-hdr"><div class="sec-title">Acheter des diamants</div></div>
+<div class="dgrid" id="buy-amounts"></div>
+</div>
+<div class="screen" id="screen-admin">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Administration</div><div style="width:40px;"></div></div>
+<div class="grid2" style="margin-bottom:8px;">
+<div class="tile"><div id="ad-stat-users">0</div><div style="font-size:10.5px;color:var(--mut);">Utilisateurs</div></div>
+<div class="tile"><div id="ad-stat-revenue">0</div><div style="font-size:10.5px;color:var(--mut);">Revenus (FCFA)</div></div>
+</div>
+<div class="grid2" style="margin-bottom:18px;">
+<div class="tile"><div id="ad-stat-pending">0</div><div style="font-size:10.5px;color:var(--mut);">Paiements en attente</div></div>
+<div class="tile"><div id="ad-stat-tickets">0</div><div style="font-size:10.5px;color:var(--mut);">Tickets ouverts</div></div>
+</div>
+<div class="chip-row">
+<div class="chip on" data-tab="payments" onclick="adminTab('payments')">Paiements</div>
+<div class="chip" data-tab="songs" onclick="adminTab('songs')">Chansons</div>
+<div class="chip" data-tab="support" onclick="adminTab('support')">Support</div>
+<div class="chip" data-tab="users" onclick="adminTab('users')">Utilisateurs</div>
+<div class="chip" data-tab="notify" onclick="adminTab('notify')">Notifier</div>
+</div>
+<div id="admin-content"></div>
+  </div>
