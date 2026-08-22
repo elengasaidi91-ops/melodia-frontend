@@ -1,0 +1,144 @@
+<div class="screen active" id="screen-auth" style="padding-top:60px;">
+<div style="text-align:center;margin-bottom:34px;">
+<svg width="64" height="64" viewBox="0 0 100 100" style="margin-bottom:14px;"><path d="M20 40 v20 M35 25 v50 M50 15 Q50 15 50 30 Q65 30 65 45 Q65 60 50 60 Q35 60 35 45" stroke="#1DB954" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="20" cy="65" r="5" fill="#1DB954"/><circle cx="65" cy="45" r="5" fill="#1DB954"/></svg>
+<div style="font-size:26px;font-weight:900;">Melodia</div>
+<div style="font-size:11.5px;color:var(--grn);font-weight:700;letter-spacing:1px;">LA MUSIQUE NOUS UNIT</div>
+</div>
+<div id="auth-err" class="err"></div>
+<div id="auth-suc" class="suc"></div>
+<div id="auth-login">
+<label class="lbl">Email</label>
+<input class="inp" id="li-email" type="email" placeholder="toi@exemple.com">
+<label class="lbl">Mot de passe</label>
+<input class="inp" id="li-pass" type="password" placeholder="********">
+<div style="text-align:right;margin-bottom:14px;"><span style="color:var(--grn);font-size:12px;font-weight:700;" onclick="showForgot()">Mot de passe oublie ?</span></div>
+<button class="btn" id="li-btn" onclick="doLogin()">Se connecter</button>
+<button class="btn outline" style="margin-top:10px;" onclick="doGoogle()">Continuer avec Google</button>
+<div class="sw">Pas encore de compte ? <span onclick="toggleAuth('register')">S'inscrire</span></div>
+<div class="sw">Administrateur ? <span onclick="toggleAuth('admin')">Connexion admin</span></div>
+</div>
+<div id="auth-register" style="display:none;">
+<div class="type-cards">
+<div class="type-card sel-listener" id="tc-listener" onclick="selType('listener')">
+<div class="tc-icon">Auditeur</div><div class="tc-name">Auditeur</div><div class="tc-desc">Ecoute et soutiens</div>
+</div>
+<div class="type-card" id="tc-artist" onclick="selType('artist')">
+<div class="tc-icon">Artiste</div><div class="tc-name">Artiste</div><div class="tc-desc">Partage ta musique</div>
+</div>
+</div>
+<label class="lbl">Nom</label>
+<input class="inp" id="re-name" placeholder="Ton nom">
+<label class="lbl">Email</label>
+<input class="inp" id="re-email" type="email" placeholder="toi@exemple.com">
+<label class="lbl">Mot de passe (8 caracteres min.)</label>
+<input class="inp" id="re-pass" type="password" placeholder="********">
+<button class="btn" style="margin-top:6px;" id="re-btn" onclick="doRegister()">Creer mon compte</button>
+<div class="sw">Deja un compte ? <span onclick="toggleAuth('login')">Se connecter</span></div>
+</div>
+<div id="auth-admin" style="display:none;">
+<label class="lbl">Email admin</label>
+<input class="inp" id="ad-email" type="email" placeholder="admin@melodia.cg">
+<label class="lbl">Mot de passe</label>
+<input class="inp" id="ad-pass" type="password" placeholder="********">
+<button class="btn" id="ad-btn" onclick="doAdminLogin()">Connexion admin</button>
+<div class="sw"><span onclick="toggleAuth('login')">Retour</span></div>
+</div>
+<div id="auth-forgot" style="display:none;">
+<p class="desc" style="margin-bottom:16px;">Entre ton email, on t'enverra un lien pour reinitialiser ton mot de passe.</p>
+<label class="lbl">Email</label>
+<input class="inp" id="fp-email" type="email" placeholder="toi@exemple.com">
+<button class="btn" id="fp-btn" onclick="doForgot()">Envoyer le lien</button>
+<div class="sw"><span onclick="toggleAuth('login')">Retour</span></div>
+</div>
+</div>
+<div class="screen" id="screen-home">
+<div class="topbar">
+<div class="brand">
+<svg viewBox="0 0 100 100"><path d="M20 40 v20 M35 25 v50 M50 15 Q50 15 50 30 Q65 30 65 45 Q65 60 50 60 Q35 60 35 45" stroke="#1DB954" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="20" cy="65" r="5.5" fill="#1DB954"/><circle cx="65" cy="45" r="5.5" fill="#1DB954"/></svg>
+<span class="brand-name">Melodia</span>
+</div>
+<button class="icon-btn" onclick="nav('notifications')">Notif<span class="badge-dot" id="notif-dot" style="display:none;"></span></button>
+</div>
+<div class="hello" id="home-hello">Bonjour</div>
+<div class="subtext">Decouvre, ecoute, soutiens.</div>
+<div class="search-bar" onclick="nav('explorer')"><span>Recherche</span><input placeholder="Rechercher un artiste, une chanson..." readonly></div>
+<div class="sec-hdr"><div class="sec-title">Nouveautes</div><div class="sec-link" onclick="nav('explorer')">Voir tout</div></div>
+<div id="home-songs"></div>
+</div>
+<div class="screen" id="screen-explorer">
+<div class="topbar"><div style="font-size:22px;font-weight:800;">Explorer</div></div>
+<div class="search-bar"><span>Recherche</span><input id="exp-search" placeholder="Rechercher..." oninput="loadExplorer()"></div>
+<div class="chip-row" id="genre-chips"></div>
+<div class="sec-hdr"><div class="sec-title">Chansons</div></div>
+<div id="exp-songs"></div>
+</div>
+<div class="screen" id="screen-player">
+<div class="player-hdr">
+<button class="icon-btn" onclick="closePlayer()">Retour</button>
+<div style="font-size:11px;color:var(--mut);text-align:center;">LECTURE EN COURS</div>
+<button class="icon-btn">Plus</button>
+</div>
+<img class="player-cover" id="pl-cover" src="">
+<div class="player-title" id="pl-title">-</div>
+<div class="player-artist" id="pl-artist">-</div>
+<div class="progress"><div class="progress-fill" id="pl-progress" style="width:30%;"></div></div>
+<div class="time-row"><span id="pl-time">0:00</span><span id="pl-dur">0:00</span></div>
+<div class="controls">
+<button class="ctl-side" onclick="showToast('Chanson precedente')">Prec</button>
+<button class="ctl-play" id="pl-playbtn" onclick="togglePlay()">Play</button>
+<button class="ctl-side" onclick="showToast('Chanson suivante')">Suiv</button>
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn outline sm" style="flex:1;" onclick="likeSong()">J'aime</button>
+<button class="btn sm" style="flex:1;" onclick="nav('diamonds')">Soutenir</button>
+</div>
+</div>
+<div class="screen" id="screen-profile">
+<div class="topbar"><div style="font-size:22px;font-weight:800;">Profil</div></div>
+<div class="profile-hdr">
+<img id="pr-avatar" src="https://api.dicebear.com/7.x/initials/svg?seed=U&backgroundColor=1DB954">
+<div>
+<div style="font-weight:800;font-size:16px;" id="pr-name">-</div>
+<div style="font-size:12px;color:var(--grn);font-weight:700;" id="pr-role">Auditeur</div>
+</div>
+</div>
+<div class="premium-card" id="premium-banner" onclick="nav('payment')">
+<div><div style="font-size:13px;">Pass Premium</div><div style="font-size:11px;font-weight:600;margin-top:2px;" id="premium-status">Non actif</div></div>
+<div>Voir</div>
+</div>
+<div class="list-row" onclick="nav('support-list')"><div class="l">Support</div><div class="arrow">Voir</div></div>
+<div class="list-row" onclick="nav('notifications')"><div class="l">Notifications</div><div class="arrow">Voir</div></div>
+<div class="list-row" id="artist-space-row" style="display:none;" onclick="nav('artist')"><div class="l">Mon espace artiste</div><div class="arrow">Voir</div></div>
+<div class="list-row" id="admin-space-row" style="display:none;" onclick="nav('admin')"><div class="l">Panneau admin</div><div class="arrow">Voir</div></div>
+<div class="list-row" onclick="logout()"><div class="l" style="color:var(--red);">Deconnexion</div></div>
+</div>
+<div class="screen" id="screen-notifications">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Notifications</div><div style="width:40px;"></div></div>
+<div id="notif-list"></div>
+</div>
+<div class="screen" id="screen-support-list">
+<div class="topbar"><button class="icon-btn" onclick="navBack()">Retour</button><div style="font-size:18px;font-weight:800;">Support Melodia</div><div style="width:40px;"></div></div>
+<button class="btn" style="margin-bottom:18px;" onclick="nav('support-new')">Nouvelle demande</button>
+<div id="support-tickets"></div>
+</div>
+<div class="screen" id="screen-support-new">
+<div class="topbar"><button class="icon-btn" onclick="nav('support-list')">Retour</button><div style="font-size:18px;font-weight:800;">Nouvelle demande</div><div style="width:40px;"></div></div>
+<label class="lbl">Categorie</label>
+<div class="cat-grid" id="sup-cats">
+<div class="cat-card on" data-cat="paiement" onclick="selCat('paiement')">Paiement</div>
+<div class="cat-card" data-cat="compte" onclick="selCat('compte')">Compte</div>
+<div class="cat-card" data-cat="technique" onclick="selCat('technique')">Technique</div>
+<div class="cat-card" data-cat="musique" onclick="selCat('musique')">Musique</div>
+<div class="cat-card" data-cat="autre" onclick="selCat('autre')">Autre</div>
+</div>
+<label class="lbl">Sujet</label>
+<input class="inp" id="sup-subject" placeholder="Resume ton probleme en quelques mots">
+<label class="lbl">Message</label>
+<textarea class="inp" id="sup-message" placeholder="Decris ton probleme en detail..."></textarea>
+<button class="btn" id="sup-submit-btn" onclick="submitTicket()">Envoyer</button>
+</div>
+<div class="screen" id="screen-support-thread">
+<div class="topbar"><button class="icon-btn" onclick="nav('support-list')">Retour</button><div style="font-size:15px;font-weight:800;" id="sup-thread-title">Ticket</div><span class="status-pill" id="sup-thread-status"></span></div>
+<div class="thread" id="sup-thread-msgs"></div>
+<div class="chat-input-row"><input id="sup-reply-input" placeholder="Ecrire une reponse..."><button class="send-btn" onclick="sendTicketReply()">Envoyer</button></div>
+  </div>
